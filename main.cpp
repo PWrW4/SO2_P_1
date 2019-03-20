@@ -6,25 +6,53 @@
 #include <chrono>
 
 
-class PhilosopherClass {
-
+class PhilosopherClass 
+{
 public:
 
-    static bool endKeyPressed;
+    static bool end;
     static std::default_random_engine generator;
 
     static void runPhilosopher(int philosopherNumber)
     {
+        std::uniform_int_distribution<int> distribution(2,5);
+
+        while(!end)
+        {
+
+            std::stringstream stream;
+            long timeForAction = distribution(generator);
+
+            stream << "Filozof " << philosopherNumber << " mysli " << timeForAction << " s." << std::endl;
+            std::cout << stream.str();
+            stream.str("");
+            std::this_thread::sleep_for(std::chrono::seconds(timeForAction));
+
+            stream << "Filozof " <<  philosopherNumber << " bierze widelce." << std::endl;
+            std::cout << stream.str();
+            stream.str("");
+
+            timeForAction = distribution(generator);
+            stream << "Filozof " << philosopherNumber << " je " << timeForAction << " sekund." << std::endl;
+            std::cout << stream.str();
+            stream.str("");
+            std::this_thread::sleep_for(std::chrono::seconds(timeForAction));
+
+            stream << "Filozof " << philosopherNumber << " odklada widelce." << std::endl;
+            std::cout << stream.str();
+            stream.str("");
+        }
+
         std::stringstream stream;
-
-        stream << philosopherNumber << std::endl;
-
+        stream << "Filozof " << philosopherNumber << " konczy dzialanie." << std::endl;
         std::cout << stream.str();
     }
 
 
 };
 
+std::default_random_engine PhilosopherClass::generator;
+bool PhilosopherClass::end = false;
 
 int main(int argc, char **argv) {
     
@@ -51,11 +79,15 @@ int main(int argc, char **argv) {
         t[i] = std::thread(PhilosopherClass::runPhilosopher, i);
     }
 
+    
+
     char c = 's';
     while(c != 'q')
     {
         std::cin >> c;
     }
+
+    PhilosopherClass::end = true;
 
     for(int i = 0; i < threadCount; i++) {
         t[i].join();
