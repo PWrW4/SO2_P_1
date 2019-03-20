@@ -15,7 +15,11 @@ public:
 
     static void runPhilosopher(int philosopherNumber)
     {
-        std::cout << philosopherNumber << std::endl;
+        std::stringstream stream;
+
+        stream << philosopherNumber << std::endl;
+
+        std::cout << stream.str();
     }
 
 
@@ -51,6 +55,10 @@ int main(int argc, char **argv) {
     while(c != 'q')
     {
         std::cin >> c;
+    }
+
+    for(int i = 0; i < threadCount; i++) {
+        t[i].join();
     }
 
     std::cout<< "Koniec Programu!"<< std::endl;
