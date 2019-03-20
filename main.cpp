@@ -1,5 +1,26 @@
 #include <iostream>
-#include <stdlib.h>
+#include <sstream>
+#include <random>
+#include <thread>
+#include <vector>
+#include <chrono>
+
+
+class PhilosopherClass {
+
+public:
+
+    static bool endKeyPressed;
+    static std::default_random_engine generator;
+
+    static void runPhilosopher(int philosopherNumber)
+    {
+        std::cout << philosopherNumber << std::endl;
+    }
+
+
+};
+
 
 int main(int argc, char **argv) {
     
@@ -21,6 +42,11 @@ int main(int argc, char **argv) {
         return 2;
     }
 
+    std::vector<std::thread> t(threadCount);
+    for(int i = 0; i < threadCount; i++) {
+        t[i] = std::thread(PhilosopherClass::runPhilosopher, i);
+    }
+
     char c = 's';
     while(c != 'q')
     {
@@ -30,4 +56,4 @@ int main(int argc, char **argv) {
     std::cout<< "Koniec Programu!"<< std::endl;
 
     return 0;
-}
+};
