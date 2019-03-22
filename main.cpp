@@ -15,7 +15,7 @@ public:
 
     static void runPhilosopher(int philosopherNumber)
     {
-        std::uniform_int_distribution<int> distribution(2,5);
+        std::uniform_int_distribution<int> distribution(2000,4500);
 
         while(!end)
         {
@@ -23,20 +23,20 @@ public:
             std::stringstream stream;
             long timeForAction = distribution(generator);
 
-            stream << "Filozof " << philosopherNumber << " mysli " << timeForAction << " s." << std::endl;
+            stream << "Filozof " << philosopherNumber << " mysli " << timeForAction << " ms." << std::endl;
             std::cout << stream.str();
             stream.str("");
-            std::this_thread::sleep_for(std::chrono::seconds(timeForAction));
+            std::this_thread::sleep_for(std::chrono::milliseconds(timeForAction));
 
             stream << "Filozof " <<  philosopherNumber << " bierze widelce." << std::endl;
             std::cout << stream.str();
             stream.str("");
 
             timeForAction = distribution(generator);
-            stream << "Filozof " << philosopherNumber << " je " << timeForAction << " sekund." << std::endl;
+            stream << "Filozof " << philosopherNumber << " je " << timeForAction << " ms." << std::endl;
             std::cout << stream.str();
             stream.str("");
-            std::this_thread::sleep_for(std::chrono::seconds(timeForAction));
+            std::this_thread::sleep_for(std::chrono::milliseconds(timeForAction));
 
             stream << "Filozof " << philosopherNumber << " odklada widelce." << std::endl;
             std::cout << stream.str();
@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
         threadCount = std::stoi(str);
     }
 
-    if(threadCount<1 || threadCount > 20){
+    if(threadCount<1 || threadCount > 30){
         std::cout << "Liczba watkow miedzy 1 a 20" << std::endl;
         return 2;
     }
